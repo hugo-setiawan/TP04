@@ -76,6 +76,8 @@ class barcode_canvas(tk.Canvas):
             return str(10 - weighted_sum_modulo)
         else:
             return weighted_sum_modulo
+
+
 def main():
     root = tk.Tk()
     window = barcode_gui(root)
