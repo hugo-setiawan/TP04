@@ -12,7 +12,9 @@ class GUI:
         self.filename_field.pack()
         self.code_label = tk.Label(root,text="Enter code (first 12 decimal digits):", font=self.label_font)
         self.code_label.pack()
-        # INSERT TEXTBOX FOR FILENAME HERE
+        self.code = tk.StringVar()
+        self.code_field = tk.Entry(root, textvariable=self.code)
+        self.code_field.pack()
         # INSERT CANVAS HERE
 
     def mainloop(self):
