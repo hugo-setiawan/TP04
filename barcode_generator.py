@@ -29,8 +29,8 @@ class barcode_canvas(tk.Canvas):
     R_CODE = ("1110010", "1100110", "1101100", "1000010", "1011100", "1001110", "1010000", "1000100", "1001000", "1110100")
     FIRST_STRUCTURE = ("LLLLLL", "LLGLGG", "LLGGLG", "LLGGGL", "LGLLGG", "LGGLLG", "LGGGLL", "LGLGLG", "LGLGGL", "LGGLGL")
     SECOND_STRUCTURE = ("RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR")
-    CHECKSUM_WEIGHT = (1,3,1,3,1,3,1,3,1,3,1,3)
-    
+    POSITION_WEIGHT = (1,3,1,3,1,3,1,3,1,3,1,3)
+
     def __init__(self, root, code) -> None:
         super().__init__(root, width=250, height=300, bg="white")
         self.code = code
