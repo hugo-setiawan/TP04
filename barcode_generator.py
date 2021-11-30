@@ -37,9 +37,9 @@ class barcode_canvas(tk.Canvas):
         print(self.encode())
 
     def encode(self):
-        first_seq = self.code[:6]
+        first_seq = self.code[1:7]
         first_group = self.FIRST_STRUCTURE[int(self.code[0])]
-        second_seq = self.code[6:]
+        second_seq = self.code[7:]
         second_group = self.SECOND_STRUCTURE[int(self.code[0])]
         encoded = ""
         encoded += "101"
