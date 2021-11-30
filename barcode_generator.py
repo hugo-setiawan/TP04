@@ -15,7 +15,6 @@ class GUI:
         self.code = tk.StringVar()
         self.code_field = tk.Entry(root, textvariable=self.code)
         self.code_field.pack()
-        # INSERT CANVAS HERE
         self.canvas = tk.Canvas(root, width=200, height=200, bg="white")
         self.canvas.pack()
 
