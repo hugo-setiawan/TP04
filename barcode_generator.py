@@ -35,6 +35,17 @@ class barcode_canvas(tk.Canvas):
         super().__init__(root, width=250, height=300, bg="white")
         self.code = code
 
+    def checkdigit_of_self(self):
+        weighted_sum = 0
+        for index,digit in enumerate(self.code):
+            digit_int = int(digit)
+            weighted_digit = digit_int * self.POSITION_WEIGHT[index]
+            weighted_sum += weighted_digit
+        weighted_sum_modulo = weighted_sum % 10
+        if weighted_sum_modulo != 0:
+            return str(10 - weighted_sum_modulo)
+        else:
+            return weighted_sum_modulo
 def main():
     root = tk.Tk()
     window = barcode_gui(root)
