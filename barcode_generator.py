@@ -34,6 +34,36 @@ class barcode_canvas(tk.Canvas):
     def __init__(self, root, code) -> None:
         super().__init__(root, width=250, height=300, bg="white")
         self.code = code
+        print(self.encode())
+
+    def encode(self):
+        first_seq = self.code[:6]
+        first_group = self.FIRST_STRUCTURE[int(self.code[0])]
+        second_seq = self.code[6:]
+        second_group = self.SECOND_STRUCTURE[int(self.code[0])]
+        encoded = ""
+        encoded += "101"
+        # FIRST SEQUENCE
+        for index,code_type in enumerate(first_group):
+            curr_digit = int(first_seq[index])
+            if code_type == "L":
+                encoded += self.L_CODE[curr_digit]
+            elif code_type == "G":
+                encoded += self.G_CODE[curr_digit]
+            else:
+                encoded += self.R_CODE[curr_digit]
+        encoded += "01010"
+        # SECOND SEQUENCE
+        for index,code_type in enumerate(second_group):
+            curr_digit = int(second_seq[index])
+            if code_type == "L":
+                encoded += self.L_CODE[curr_digit]
+            elif code_type == "G":
+                encoded += self.G_CODE[curr_digit]
+            else:
+                encoded += self.R_CODE[curr_digit]
+        encoded += "101"
+        return encoded
 
     def checkdigit(self):
         weighted_sum = 0
