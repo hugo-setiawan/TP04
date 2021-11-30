@@ -15,7 +15,7 @@ class GUI:
         self.code = tk.StringVar()
         self.code_field = tk.Entry(root, textvariable=self.code)
         self.code_field.pack()
-        self.canvas = tk.Canvas(root, width=200, height=200, bg="white")
+        self.canvas = tk.Canvas(root, width=250, height=300, bg="white")
         self.canvas.pack()
 
     def mainloop(self):
