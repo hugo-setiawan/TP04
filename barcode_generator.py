@@ -29,7 +29,6 @@ class barcode_canvas(tk.Canvas):
     R_CODE = ("1110010", "1100110", "1101100", "1000010", "1011100", "1001110", "1010000", "1000100", "1001000", "1110100")
     FIRST_STRUCTURE = ("LLLLLL", "LLGLGG", "LLGGLG", "LLGGGL", "LGLLGG", "LGGLLG", "LGGGLL", "LGLGLG", "LGLGGL", "LGGLGL")
     SECOND_STRUCTURE = ("RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR")
-    POSITION_WEIGHT = (1,3,1,3,1,3,1,3,1,3,1,3)
     SEPARATOR_HEIGHT = 0 # TODO change value
     NORMAL_HEIGHT = 0 # TODO change value
 
@@ -68,8 +67,9 @@ class barcode_canvas(tk.Canvas):
         encoded += "101"
         return encoded
 
-    def checkdigit(self):
-        weighted_sum = 0
+def checkdigit(code):
+    POSITION_WEIGHT = (1,3,1,3,1,3,1,3,1,3,1,3)
+    weighted_sum = 0
         for index,digit in enumerate(self.code):
             digit_int = int(digit)
             weighted_digit = digit_int * self.POSITION_WEIGHT[index]
