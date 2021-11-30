@@ -35,3 +35,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# References
+# https://www.youtube.com/watch?v=5buJAAa_AX4 (for EAN-13 barcode generation)
