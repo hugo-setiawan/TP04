@@ -70,15 +70,15 @@ class barcode_canvas(tk.Canvas):
 def checkdigit(code):
     POSITION_WEIGHT = (1,3,1,3,1,3,1,3,1,3,1,3)
     weighted_sum = 0
-        for index,digit in enumerate(self.code):
-            digit_int = int(digit)
-            weighted_digit = digit_int * self.POSITION_WEIGHT[index]
-            weighted_sum += weighted_digit
-        weighted_sum_modulo = weighted_sum % 10
-        if weighted_sum_modulo != 0:
-            return str(10 - weighted_sum_modulo)
-        else:
-            return weighted_sum_modulo
+    for index,digit in enumerate(code):
+        digit_int = int(digit)
+        weighted_digit = digit_int * POSITION_WEIGHT[index]
+        weighted_sum += weighted_digit
+    weighted_sum_modulo = weighted_sum % 10
+    if weighted_sum_modulo != 0:
+        return str(10 - weighted_sum_modulo)
+    else:
+        return weighted_sum_modulo
 
 
 def main():
