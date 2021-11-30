@@ -30,6 +30,8 @@ class barcode_canvas(tk.Canvas):
     FIRST_STRUCTURE = ("LLLLLL", "LLGLGG", "LLGGLG", "LLGGGL", "LGLLGG", "LGGLLG", "LGGGLL", "LGLGLG", "LGLGGL", "LGGLGL")
     SECOND_STRUCTURE = ("RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR")
     POSITION_WEIGHT = (1,3,1,3,1,3,1,3,1,3,1,3)
+    SEPARATOR_HEIGHT = 0 # TODO change value
+    NORMAL_HEIGHT = 0 # TODO change value
 
     def __init__(self, root, code) -> None:
         super().__init__(root, width=250, height=300, bg="white")
