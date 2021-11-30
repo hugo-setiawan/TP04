@@ -35,7 +35,7 @@ class barcode_canvas(tk.Canvas):
         super().__init__(root, width=250, height=300, bg="white")
         self.code = code
 
-    def checkdigit_of_self(self):
+    def checkdigit(self):
         weighted_sum = 0
         for index,digit in enumerate(self.code):
             digit_int = int(digit)
