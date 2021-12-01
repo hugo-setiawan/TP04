@@ -69,7 +69,8 @@ class barcode_canvas(tk.Canvas):
         """
         current_x = self.START_POSITION[0]
         current_y = self.START_POSITION[1]
-        def draw_bar(bit,start_x,start_y,color,guard=False):
+        width = 2
+        def draw_bar(bit,start_x,start_y,width,color,guard=False):
             if guard:
                 end_y = start_y + 80
             else:
@@ -78,28 +79,28 @@ class barcode_canvas(tk.Canvas):
                 fill = "white"
             else:
                 fill = color
-            end_x = start_x + 2
+            end_x = start_x + width
             self.create_rectangle(start_x,start_y,end_x,end_y,fill=fill,width=0)
         # Draw opening guard (101)
         for bit in "101":
-            draw_bar(bit,current_x,current_y,"red",True)
-            current_x += 2
+            draw_bar(bit,current_x,current_y,width,"red",True)
+            current_x += width
         # Draw first seq
         for bit in self.encoded[0]:
-            draw_bar(bit,current_x,current_y,"blue")
-            current_x += 2
+            draw_bar(bit,current_x,current_y,width,"blue")
+            current_x += width
         # Draw middle guard (01010)
         for bit in "01010":
-            draw_bar(bit,current_x,current_y,"red",True)
-            current_x += 2
+            draw_bar(bit,current_x,current_y,width,"red",True)
+            current_x += width
         # Draw second seq
         for bit in self.encoded[1]:
-            draw_bar(bit,current_x,current_y,"green")
-            current_x += 2
+            draw_bar(bit,current_x,current_y,width,"green")
+            current_x += width
         # Draw end guard (101)
         for bit in "101":
-            draw_bar(bit,current_x,current_y,"red",True)
-            current_x += 2
+            draw_bar(bit,current_x,current_y,width,"red",True)
+            current_x += width
     
 
 def checkdigit(code):
