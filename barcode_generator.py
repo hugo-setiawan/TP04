@@ -57,12 +57,7 @@ class barcode_canvas(tk.Canvas):
         # SECOND SEQUENCE
         for index,code_type in enumerate(second_group):
             curr_digit = int(second_seq[index])
-            if code_type == "L":
-                encoded += self.L_CODE[curr_digit]
-            elif code_type == "G":
-                encoded += self.G_CODE[curr_digit]
-            else:
-                encoded += self.R_CODE[curr_digit]
+            encoded += self.R_CODE[curr_digit]
         return encoded
 
 def checkdigit(code):
