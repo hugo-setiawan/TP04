@@ -17,7 +17,16 @@ class barcode_gui:
         self.code = tk.StringVar()
         self.code_field = tk.Entry(root, textvariable=self.code)
         self.code_field.pack()
+        self.generate_button = tk.Button(root, text="Generate barcode!", command=self.generate_barcode)
+        self.generate_button.pack()
         self.canvas = tk.Canvas(root, width=250, height=300, bg="white")
+        self.canvas.pack()
+
+    def generate_barcode(self):
+        # Validate save path
+        # Validate code
+        self.canvas.destroy()
+        self.canvas = barcode_canvas(self.root,"0089686140743")
         self.canvas.pack()
 
     def mainloop(self):
