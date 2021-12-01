@@ -35,9 +35,9 @@ class barcode_canvas(tk.Canvas):
     def __init__(self, root, code) -> None:
         super().__init__(root, width=250, height=300, bg="white")
         self.code = code
-        print(self.encode())
+        print(self.get_encoded())
 
-    def encode(self):
+    def get_encoded(self):
         first_seq = self.code[1:7]
         first_digit = int(self.code[0])
         first_group = self.FIRST_STRUCTURE[first_digit]
