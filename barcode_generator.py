@@ -1,3 +1,4 @@
+from tabnanny import check
 import tkinter as tk
 from tkinter.font import Font
 
@@ -17,7 +18,7 @@ class barcode_gui:
         self.code = tk.StringVar()
         self.code_field = tk.Entry(root, textvariable=self.code)
         self.code_field.pack()
-        self.canvas = barcode_canvas(root,"8997029809979")
+        self.canvas = barcode_canvas(root,"8711253001202")
         self.canvas.pack()
 
     def mainloop(self):
