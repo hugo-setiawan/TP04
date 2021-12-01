@@ -25,11 +25,20 @@ class barcode_gui:
         self.canvas.pack()
 
     def generate_barcode(self):
-        # Validate save path
         # Validate code
+        self.code = self.code_var.get()
+        self.filter = filter(str.isdigit, self.code)
+        self.code_filtered = "".join(self.filter)
+        if len(self.code_filtered) != 12:
+            showerror(self.title,"Please enter correct input code.")
+            return False
+        # Validate save path
+        self.filename = self.filename_var.get()
+        self.code_checked = self.code_filtered + str(checkdigit(self.code_filtered))
         self.canvas.destroy()
-        self.canvas = barcode_canvas(self.root,"0089686140743")
+        self.canvas = barcode_canvas(self.root,self.code_checked)
         self.canvas.pack()
+        return True
 
     def mainloop(self):
         self.root.mainloop()
