@@ -39,6 +39,9 @@ class barcode_canvas(tk.Canvas):
         print(self.get_encoded())
 
     def get_encoded(self):
+        """
+        Fungsi ini mengembalikan list yang berisi kedua bagian self.code yang sudah diencode TANPA guard sequence.
+        """
         first_seq = self.code[1:7]
         first_digit = int(self.code[0])
         first_group = self.FIRST_STRUCTURE[first_digit]
