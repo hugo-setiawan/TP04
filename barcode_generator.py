@@ -44,19 +44,20 @@ class barcode_canvas(tk.Canvas):
         first_group = self.FIRST_STRUCTURE[first_digit]
         second_seq = self.code[7:]
         second_group = self.SECOND_STRUCTURE[first_digit]
-        encoded = ""
+        first_encoded = ""
+        second_encoded = ""
         # FIRST SEQUENCE
         for index,code_type in enumerate(first_group):
             curr_digit = int(first_seq[index])
             if code_type == "L":
-                encoded += self.L_CODE[curr_digit]
+                first_encoded += self.L_CODE[curr_digit]
             else:
-                encoded += self.G_CODE[curr_digit]
+                first_encoded += self.G_CODE[curr_digit]
         # SECOND SEQUENCE
         for index,code_type in enumerate(second_group):
             curr_digit = int(second_seq[index])
-            encoded += self.R_CODE[curr_digit]
-        return encoded
+            second_encoded += self.R_CODE[curr_digit]
+        return (first_encoded,second_encoded)
 
 def checkdigit(code):
     POSITION_WEIGHT = (1,3,1,3,1,3,1,3,1,3,1,3)
