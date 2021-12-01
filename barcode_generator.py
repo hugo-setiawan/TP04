@@ -37,6 +37,7 @@ class barcode_canvas(tk.Canvas):
     def __init__(self, root, code) -> None:
         super().__init__(root, width=250, height=300, bg="white")
         self.code = code
+        self.encoded = self.get_encoded()
         self.draw_barcode()
 
     def get_encoded(self):
