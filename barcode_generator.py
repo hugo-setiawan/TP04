@@ -36,7 +36,7 @@ class barcode_canvas(tk.Canvas):
     def __init__(self, root, code) -> None:
         super().__init__(root, width=250, height=300, bg="white")
         self.code = code
-        print(self.get_encoded())
+        self.draw_barcode()
 
     def get_encoded(self):
         """
@@ -61,6 +61,45 @@ class barcode_canvas(tk.Canvas):
             curr_digit = int(second_seq[index])
             second_encoded += self.R_CODE[curr_digit]
         return (first_encoded,second_encoded)
+
+    def draw_barcode(self):
+        """
+        Fungsi ini menggambar barcode dengan data yang sudah diencode di self.encoded.
+        """
+        current_x = self.START_POSITION[0]
+        current_y = self.START_POSITION[1]
+        def draw_bar(bit,start_x,start_y,color,guard=False):
+            if guard:
+                end_y = start_y + 80
+            else:
+                end_y = start_y + 70
+            if bit == "0":
+                fill = "white"
+            else:
+                fill = color
+            end_x = start_x + 2
+            self.create_rectangle(start_x,start_y,end_x,end_y,fill=fill,width=0)
+        # Draw opening guard (101)
+        for bit in "101":
+            draw_bar(bit,current_x,current_y,"red",True)
+            current_x += 2
+        # Draw first seq
+        for bit in self.encoded[0]:
+            draw_bar(bit,current_x,current_y,"blue")
+            current_x += 2
+        # Draw middle guard (01010)
+        for bit in "01010":
+            draw_bar(bit,current_x,current_y,"red",True)
+            current_x += 2
+        # Draw second seq
+        for bit in self.encoded[1]:
+            draw_bar(bit,current_x,current_y,"green")
+            current_x += 2
+        # Draw end guard (101)
+        for bit in "101":
+            draw_bar(bit,current_x,current_y,"red",True)
+            current_x += 2
+    
 
 def checkdigit(code):
     POSITION_WEIGHT = (1,3,1,3,1,3,1,3,1,3,1,3)
