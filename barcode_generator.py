@@ -18,7 +18,7 @@ class barcode_gui:
         self.code = tk.StringVar()
         self.code_field = tk.Entry(root, textvariable=self.code)
         self.code_field.pack()
-        self.canvas = barcode_canvas(root,"8711253001202")
+        self.canvas = tk.Canvas(root, width=250, height=300, bg="white")
         self.canvas.pack()
 
     def mainloop(self):
