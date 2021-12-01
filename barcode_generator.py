@@ -45,7 +45,6 @@ class barcode_canvas(tk.Canvas):
         second_seq = self.code[7:]
         second_group = self.SECOND_STRUCTURE[first_digit]
         encoded = ""
-        encoded += "101"
         # FIRST SEQUENCE
         for index,code_type in enumerate(first_group):
             curr_digit = int(first_seq[index])
@@ -55,7 +54,6 @@ class barcode_canvas(tk.Canvas):
                 encoded += self.G_CODE[curr_digit]
             else:
                 encoded += self.R_CODE[curr_digit]
-        encoded += "01010"
         # SECOND SEQUENCE
         for index,code_type in enumerate(second_group):
             curr_digit = int(second_seq[index])
@@ -65,7 +63,6 @@ class barcode_canvas(tk.Canvas):
                 encoded += self.G_CODE[curr_digit]
             else:
                 encoded += self.R_CODE[curr_digit]
-        encoded += "101"
         return encoded
 
 def checkdigit(code):
