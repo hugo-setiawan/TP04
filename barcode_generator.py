@@ -87,9 +87,6 @@ class barcode_canvas(tk.Canvas):
         """
         Fungsi ini menggambar barcode dengan data yang sudah diencode di self.encoded.
         """
-        current_x = self.START_POSITION[0]
-        current_y = self.START_POSITION[1]
-        width = 2
         def draw_bar(bit,start_x,start_y,width,color,guard=False):
             if guard:
                 end_y = start_y + 80
@@ -101,6 +98,9 @@ class barcode_canvas(tk.Canvas):
                 fill = color
             end_x = start_x + width
             self.create_rectangle(start_x,start_y,end_x,end_y,fill=fill,width=0)
+        current_x = self.START_POSITION[0]
+        current_y = self.START_POSITION[1]
+        width = 2
         # Draw opening guard (101)
         for bit in "101":
             draw_bar(bit,current_x,current_y,width,"red",True)
