@@ -34,7 +34,9 @@ class barcode_gui:
             return False
         # Validate save path
         self.filename = self.filename_var.get()
+        # Tambahkan check digit ke 12 digit code
         self.code_checked = self.code_filtered + str(checkdigit(self.code_filtered))
+        # Hapus canvas sekarang dan buat object barcode_canvas baru
         self.canvas.destroy()
         self.canvas = barcode_canvas(self.root,self.code_checked)
         self.canvas.pack()
@@ -44,6 +46,7 @@ class barcode_gui:
         self.root.mainloop()
 
 class barcode_canvas(tk.Canvas):
+    # Konstanta yang digunakan dalam class ini
     L_CODE = ("0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011")
     G_CODE = ("0100111", "0110011", "0011011", "0100001", "0011101", "0111001", "0000101", "0010001", "0001001", "0010111")
     R_CODE = ("1110010", "1100110", "1101100", "1000010", "1011100", "1001110", "1010000", "1000100", "1001000", "1110100")
@@ -54,9 +57,12 @@ class barcode_canvas(tk.Canvas):
     NORMAL_HEIGHT = 25 # TODO change initial value
 
     def __init__(self, root, code) -> None:
+        # Init parent class (tk.Canvas) dengan ukuran dan warna yang sesuai
         super().__init__(root, width=250, height=300, bg="white")
+        # Dari code yang telah dipass sebagai parameter dari constructor barcode_canvas, encode terlebih dahulu
         self.code = code
         self.encoded = self.get_encoded()
+        # Buat barcode dari hasil encode
         self.draw_barcode()
 
     def get_encoded(self):
@@ -124,6 +130,7 @@ class barcode_canvas(tk.Canvas):
     
 
 def checkdigit(code):
+    # Konstanta untuk "weight" setiap digit (misal, digit ke-3 weightnya 1 ada di index 2)
     POSITION_WEIGHT = (1,3,1,3,1,3,1,3,1,3,1,3)
     weighted_sum = 0
     for index,digit in enumerate(code):
