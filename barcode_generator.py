@@ -155,3 +155,4 @@ if __name__ == "__main__":
 # References
 # https://www.youtube.com/watch?v=5buJAAa_AX4 (for EAN-13 barcode generation)
 # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter
+# https://stackoverflow.com/questions/1976007/what-characters-are-forbidden-in-windows-and-linux-directory-names (for filename validation)
