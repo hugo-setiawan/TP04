@@ -95,9 +95,9 @@ class barcode_canvas(tk.Canvas):
         """
         def draw_bar(bit,start_x,start_y,width,color,guard=False):
             if guard:
-                end_y = start_y + 80
+                end_y = start_y + self.SEPARATOR_HEIGHT
             else:
-                end_y = start_y + 70
+                end_y = start_y + self.NORMAL_HEIGHT
             if bit == "0":
                 fill = "white"
             else:
