@@ -35,7 +35,7 @@ class barcode_gui:
         # Validate save path
         self.filename = self.filename_var.get()
         # Tambahkan check digit ke 12 digit code
-        self.code_checked = self.code_filtered + str(checkdigit(self.code_filtered))
+        self.code_checked = self.code_filtered + checkdigit(self.code_filtered)
         # Hapus canvas sekarang dan buat object barcode_canvas baru
         self.canvas.destroy()
         self.canvas = barcode_canvas(self.root,self.code_checked)
@@ -141,7 +141,7 @@ def checkdigit(code):
     if weighted_sum_modulo != 0:
         return str(10 - weighted_sum_modulo)
     else:
-        return weighted_sum_modulo
+        return str(weighted_sum_modulo)
 
 
 def main():
