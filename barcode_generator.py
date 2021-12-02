@@ -53,8 +53,8 @@ class barcode_canvas(tk.Canvas):
     FIRST_STRUCTURE = ("LLLLLL", "LLGLGG", "LLGGLG", "LLGGGL", "LGLLGG", "LGGLLG", "LGGGLL", "LGLGLG", "LGLGGL", "LGGLGL")
     SECOND_STRUCTURE = ("RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR")
     START_POSITION = (30,80)
-    SEPARATOR_HEIGHT = 22 # TODO change initial value
-    NORMAL_HEIGHT = 25 # TODO change initial value
+    SEPARATOR_HEIGHT = 80 
+    NORMAL_HEIGHT = 70 
 
     def __init__(self, root, code) -> None:
         # Init parent class (tk.Canvas) dengan ukuran dan warna yang sesuai
