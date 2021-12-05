@@ -106,8 +106,7 @@ class barcode_canvas(tk.Canvas):
 
             self.create_line(x,start_y,x,end_y, fill=fill, width=width)
 
-        current_x = self.START_POSITION[0]
-        current_y = self.START_POSITION[1]
+        current_x, current_y = self.START_POSITION
         width = 2
         # Draw opening guard (101)
         for bit in "101":
