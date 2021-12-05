@@ -69,6 +69,14 @@ class barcode_canvas(tk.Canvas):
         """
         Fungsi ini mengembalikan list yang berisi kedua bagian self.code yang sudah diencode TANPA guard sequence.
         """
+        def encode(digit,code_type,l_code=self.L_CODE,g_code=self.G_CODE,r_code=self.R_CODE):
+            if code_type == "L":
+                return l_code[digit]
+            elif code_type == "G":
+                return g_code[digit]
+            else:
+                return r_code[digit]
+
         first_seq = self.code[1:7]
         first_digit = int(self.code[0])
         first_group = self.FIRST_STRUCTURE[first_digit]
@@ -76,17 +84,17 @@ class barcode_canvas(tk.Canvas):
         second_group = self.SECOND_STRUCTURE[first_digit]
         first_encoded = ""
         second_encoded = ""
+        
         # FIRST SEQUENCE
         for index,code_type in enumerate(first_group):
             curr_digit = int(first_seq[index])
-            if code_type == "L":
-                first_encoded += self.L_CODE[curr_digit]
-            else:
-                first_encoded += self.G_CODE[curr_digit]
+            first_encoded += encode(curr_digit,code_type)
+
         # SECOND SEQUENCE
         for index,code_type in enumerate(second_group):
             curr_digit = int(second_seq[index])
-            second_encoded += self.R_CODE[curr_digit]
+            second_encoded += encode(curr_digit,code_type)
+
         return (first_encoded,second_encoded)
 
     def draw_barcode(self):
