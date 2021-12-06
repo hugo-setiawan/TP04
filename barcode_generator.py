@@ -19,11 +19,170 @@ class barcode_gui:
         self.code_var = tk.StringVar()
         self.code_field = tk.Entry(root, textvariable=self.code_var)
         self.code_field.pack()
+        self.generate_button = tk.Button(root, text="Generate barcode!", command=self.generate_barcode)
+        self.generate_button.pack()
         self.canvas = tk.Canvas(root, width=250, height=300, bg="white")
         self.canvas.pack()
 
+    def generate_barcode(self):
+        # Validate code
+        self.code = self.code_var.get()
+        self.filter = filter(str.isdigit, self.code)
+        self.code_filtered = "".join(self.filter)
+        if len(self.code_filtered) != 12:
+            showerror(self.title,"Please enter correct input code.")
+        else:
+            # Validate save path
+            self.filename = self.filename_var.get()
+            if not valid_filename(self.filename):
+                showerror(self.title,"Please enter correct filename.")
+            else:
+                # Tambahkan check digit ke 12 digit code
+                self.code_checked = self.code_filtered + checkdigit(self.code_filtered)
+                # Hapus canvas sekarang dan buat object barcode_canvas baru
+                self.canvas.destroy()
+                self.canvas = barcode_canvas(self.root,self.code_checked)
+                self.canvas.pack()
+                self.canvas.update()
+                self.canvas.postscript(file=self.filename)
+
     def mainloop(self):
         self.root.mainloop()
+
+class barcode_canvas(tk.Canvas):
+    # Konstanta yang digunakan dalam class ini
+    L_CODE = ("0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011")
+    G_CODE = ("0100111", "0110011", "0011011", "0100001", "0011101", "0111001", "0000101", "0010001", "0001001", "0010111")
+    R_CODE = ("1110010", "1100110", "1101100", "1000010", "1011100", "1001110", "1010000", "1000100", "1001000", "1110100")
+    FIRST_STRUCTURE = ("LLLLLL", "LLGLGG", "LLGGLG", "LLGGGL", "LGLLGG", "LGGLLG", "LGGGLL", "LGLGLG", "LGLGGL", "LGGLGL")
+    SECOND_STRUCTURE = ("RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR", "RRRRRR")
+    START_POSITION = (40,80)
+    SEPARATOR_HEIGHT = 140
+    NORMAL_HEIGHT = 130
+
+    def __init__(self, root, code) -> None:
+        # Init parent class (tk.Canvas) dengan ukuran dan warna yang sesuai
+        super().__init__(root, width=250, height=300, bg="white")
+        # Dari code yang telah dipass sebagai parameter dari constructor barcode_canvas, encode terlebih dahulu
+        self.code = code
+        self.encoded = self.get_encoded()
+        # Buat barcode dari hasil encode
+        self.draw_barcode()
+        self.draw_text()
+
+    def get_encoded(self):
+        """
+        Fungsi ini mengembalikan list yang berisi kedua bagian self.code yang sudah diencode TANPA guard sequence.
+        """
+        def encode(digit,code_type,l_code=self.L_CODE,g_code=self.G_CODE,r_code=self.R_CODE):
+            if code_type == "L":
+                return l_code[digit]
+            elif code_type == "G":
+                return g_code[digit]
+            else:
+                return r_code[digit]
+
+        first_seq = self.code[1:7]
+        first_digit = int(self.code[0])
+        first_group = self.FIRST_STRUCTURE[first_digit]
+        second_seq = self.code[7:]
+        second_group = self.SECOND_STRUCTURE[first_digit]
+        first_encoded = ""
+        second_encoded = ""
+        
+        # FIRST SEQUENCE
+        for index,code_type in enumerate(first_group):
+            curr_digit = int(first_seq[index])
+            first_encoded += encode(curr_digit,code_type)
+
+        # SECOND SEQUENCE
+        for index,code_type in enumerate(second_group):
+            curr_digit = int(second_seq[index])
+            second_encoded += encode(curr_digit,code_type)
+
+        return (first_encoded,second_encoded)
+
+    def draw_barcode(self):
+        """
+        Fungsi ini menggambar barcode dengan data yang sudah diencode di self.encoded.
+        """
+        def draw_bar(bit,x,start_y,width,color,guard=False):
+            if guard:
+                end_y = start_y + self.SEPARATOR_HEIGHT
+            else:
+                end_y = start_y + self.NORMAL_HEIGHT
+
+            if bit == "0":
+                fill = "white"
+            else:
+                fill = color
+
+            self.create_line(x,start_y,x,end_y, fill=fill, width=width)
+
+        current_x, current_y = self.START_POSITION
+        width = 2
+        # Draw opening guard (101)
+        for bit in "101":
+            draw_bar(bit,current_x,current_y,width,"red",True)
+            current_x += width
+        # Draw first seq
+        for bit in self.encoded[0]:
+            draw_bar(bit,current_x,current_y,width,"blue")
+            current_x += width
+        # Draw middle guard (01010)
+        for bit in "01010":
+            draw_bar(bit,current_x,current_y,width,"red",True)
+            current_x += width
+        # Draw second seq
+        for bit in self.encoded[1]:
+            draw_bar(bit,current_x,current_y,width,"green")
+            current_x += width
+        # Draw end guard (101)
+        for bit in "101":
+            draw_bar(bit,current_x,current_y,width,"red",True)
+            current_x += width
+    
+    def draw_text(self):
+        """
+        Fungsi ini menulis teks yang mendampingi barcode.
+        """
+        font = Font(size=15,family="Helvetica",weight="bold")
+        current_x = 130
+        current_y = self.START_POSITION[1] - 20
+        self.create_text(current_x,current_y,text="EAN-13 Barcode:",font=font)
+        # Set start position utk text (di bawah)
+        current_x = self.START_POSITION[0] - 15
+        current_y = self.START_POSITION[1] + self.SEPARATOR_HEIGHT + 10
+        self.create_text(current_x,current_y,text=self.code[0],font=font,anchor=tk.W)
+        current_x += 33
+        self.create_text(current_x,current_y,text=self.code[1:7],font=font,anchor=tk.W)
+        current_x += 90
+        self.create_text(current_x,current_y,text=self.code[7:],font=font,anchor=tk.W)
+        current_x = 130
+        current_y += 30
+        self.create_text(current_x,current_y,text=f"Check Digit: {self.code[-1]}",font=font,fill="gold")
+
+def checkdigit(code):
+    # Konstanta untuk "weight" setiap digit (misal, digit ke-3 weightnya 1 ada di index 2)
+    POSITION_WEIGHT = (1,3,1,3,1,3,1,3,1,3,1,3)
+    weighted_sum = 0
+    for index,digit in enumerate(code):
+        digit_int = int(digit)
+        weighted_digit = digit_int * POSITION_WEIGHT[index]
+        weighted_sum += weighted_digit
+    weighted_sum_modulo = weighted_sum % 10
+    if weighted_sum_modulo != 0:
+        return str(10 - weighted_sum_modulo)
+    else:
+        return str(weighted_sum_modulo)
+
+def valid_filename(filename:str):
+    filename_upper = filename.upper()
+    if not (filename_upper.endswith(".EPS") or filename_upper.endswith(".PS")):
+        return False
+    elif (filename_upper.startswith(".EPS") or filename_upper.startswith(".PS")):
+        return False
+    return True
 
 def main():
     root = tk.Tk()
