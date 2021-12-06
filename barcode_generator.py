@@ -31,16 +31,20 @@ class barcode_gui:
         self.code_filtered = "".join(self.filter)
         if len(self.code_filtered) != 12:
             showerror(self.title,"Please enter correct input code.")
-            return False
-        # Validate save path
-        self.filename = self.filename_var.get()
-        # Tambahkan check digit ke 12 digit code
-        self.code_checked = self.code_filtered + checkdigit(self.code_filtered)
-        # Hapus canvas sekarang dan buat object barcode_canvas baru
-        self.canvas.destroy()
-        self.canvas = barcode_canvas(self.root,self.code_checked)
-        self.canvas.pack()
-        return True
+        else:
+            # Validate save path
+            self.filename = self.filename_var.get()
+            if not valid_filename(self.filename):
+                showerror(self.title,"Please enter correct filename.")
+            else:
+                # Tambahkan check digit ke 12 digit code
+                self.code_checked = self.code_filtered + checkdigit(self.code_filtered)
+                # Hapus canvas sekarang dan buat object barcode_canvas baru
+                self.canvas.destroy()
+                self.canvas = barcode_canvas(self.root,self.code_checked)
+                self.canvas.pack()
+                self.canvas.update()
+                self.canvas.postscript(file=self.filename)
 
     def mainloop(self):
         self.root.mainloop()
