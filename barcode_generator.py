@@ -137,6 +137,25 @@ class barcode_canvas(tk.Canvas):
             draw_bar(bit,current_x,current_y,width,"red",True)
             current_x += width
     
+    def draw_text(self):
+        """
+        Fungsi ini menulis teks yang mendampingi barcode.
+        """
+        font = Font(size=15,family="Helvetica",weight="bold")
+        current_x = 130
+        current_y = self.START_POSITION[1] - 20
+        self.create_text(current_x,current_y,text="EAN-13 Barcode:",font=font)
+        # Set start position utk text (di bawah)
+        current_x = self.START_POSITION[0] - 15
+        current_y = self.START_POSITION[1] + self.SEPARATOR_HEIGHT + 10
+        self.create_text(current_x,current_y,text=self.code[0],font=font,anchor=tk.W)
+        current_x += 33
+        self.create_text(current_x,current_y,text=self.code[1:7],font=font,anchor=tk.W)
+        current_x += 90
+        self.create_text(current_x,current_y,text=self.code[7:],font=font,anchor=tk.W)
+        current_x = 130
+        current_y += 30
+        self.create_text(current_x,current_y,text=f"Check Digit: {self.code[-1]}",font=font,fill="gold")
 
 def checkdigit(code):
     # Konstanta untuk "weight" setiap digit (misal, digit ke-3 weightnya 1 ada di index 2)
