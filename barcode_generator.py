@@ -64,6 +64,7 @@ class barcode_canvas(tk.Canvas):
         self.encoded = self.get_encoded()
         # Buat barcode dari hasil encode
         self.draw_barcode()
+        self.draw_text()
 
     def get_encoded(self):
         """
