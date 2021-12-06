@@ -176,6 +176,13 @@ def checkdigit(code):
     else:
         return str(weighted_sum_modulo)
 
+def valid_filename(filename:str):
+    filename_upper = filename.upper()
+    if not (filename_upper.endswith(".EPS") or filename_upper.endswith(".PS")):
+        return False
+    elif (filename_upper.startswith(".EPS") or filename_upper.startswith(".PS")):
+        return False
+    return True
 
 def main():
     root = tk.Tk()
