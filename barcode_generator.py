@@ -13,18 +13,20 @@ class barcode_gui:
         self.save_label.pack()
         self.filename_var = tk.StringVar()
         self.filename_field = tk.Entry(root, textvariable=self.filename_var)
+        self.filename_field.bind('<Return>',self.generate_barcode)
         self.filename_field.pack()
         self.code_label = tk.Label(root,text="Enter code (first 12 decimal digits):", font=self.label_font)
         self.code_label.pack()
         self.code_var = tk.StringVar()
         self.code_field = tk.Entry(root, textvariable=self.code_var)
+        self.code_field.bind('<Return>',self.generate_barcode)
         self.code_field.pack()
         self.generate_button = tk.Button(root, text="Generate barcode!", command=self.generate_barcode)
         self.generate_button.pack()
         self.canvas = tk.Canvas(root, width=250, height=300, bg="white")
         self.canvas.pack()
 
-    def generate_barcode(self):
+    def generate_barcode(self, event=None):
         # Validate code
         self.code = self.code_var.get()
         self.filter = filter(str.isdigit, self.code)
