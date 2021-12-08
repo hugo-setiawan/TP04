@@ -151,7 +151,8 @@ class barcode_canvas(tk.Canvas):
         Fungsi ini menulis teks yang mendampingi barcode.
         """
         font = Font(size=15,family="Helvetica",weight="bold")
-        current_x = 130
+        # Tulis "EAN-13 Barcode:" di atas barcode
+        current_x = self.START_POSITION[0] + 90
         current_y = self.START_POSITION[1] - 20
         self.create_text(current_x,current_y,text="EAN-13 Barcode:",font=font)
         # Set start position utk text (di bawah)
