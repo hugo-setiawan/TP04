@@ -165,13 +165,22 @@ class barcode_canvas(tk.Canvas):
         self.create_text(current_x,current_y,text=f"Check Digit: {self.code[-1]}",font=font,fill="gold")
 
 def checkdigit(code):
-    # Konstanta untuk "weight" setiap digit (misal, digit ke-3 weightnya 1 ada di index 2)
+    """
+    Fungsi yang menghitung checkdigit dari 12 digit EAN-13 code dan mengembalikan checkdigitnya dalam bentuk string.
+    """
+    # Konstanta untuk "weight" setiap digit (misal, digit ke-3 (index 2) weightnya 1)
     POSITION_WEIGHT = (1,3,1,3,1,3,1,3,1,3,1,3)
+    # Nilai awal weighted sum (total seluruh digit yang telah dikalikan "weight" masing-masing digit)
     weighted_sum = 0
+
+    # Iterasikan setiap digit dalam 12 digit code
     for index,digit in enumerate(code):
+        # Jadikan digit dalam bentuk int, kemudian hitung dengan weight dan tambahkan ke weighted sum
         digit_int = int(digit)
         weighted_digit = digit_int * POSITION_WEIGHT[index]
         weighted_sum += weighted_digit
+
+    # Hitung weighted sum mod 10 dan kembalikan checkdigit sesuai spesifikasi yang ada
     weighted_sum_modulo = weighted_sum % 10
     if weighted_sum_modulo != 0:
         return str(10 - weighted_sum_modulo)
@@ -179,11 +188,18 @@ def checkdigit(code):
         return str(weighted_sum_modulo)
 
 def valid_filename(filename:str):
+    """
+    Fungsi yang melakukan validasi filename, di mana filename harus berekstensi .ps atau .eps.
+    """
+    # Menyimpan filename dalam bentuk upper sementara (hanya untuk pengecekan)
     filename_upper = filename.upper()
+
+    # Cek ekstensi (harus .eps atau .ps, dan ada namanya i.e. bukan cuman ".ps")
     if not (filename_upper.endswith(".EPS") or filename_upper.endswith(".PS")):
         return False
     elif (filename_upper.startswith(".EPS") or filename_upper.startswith(".PS")):
         return False
+    # Ketika filename sudah benar return True
     return True
 
 def main():
