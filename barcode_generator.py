@@ -7,22 +7,25 @@ class barcode_gui:
         self.root = root
         self.title = "EAN-13 Barcode Generator"
         self.root.title(self.title)
+        self.create_widgets()
+
+    def create_widgets(self):
         self.label_font = Font(family="Helvetica", weight="bold")
-        self.save_label = tk.Label(root,text="Save barcode to PS file [eg: EAN13.eps]:", font=self.label_font)
+        self.save_label = tk.Label(self.root,text="Save barcode to PS file [eg: EAN13.eps]:", font=self.label_font)
         self.save_label.pack()
         self.filename_var = tk.StringVar()
-        self.filename_field = tk.Entry(root, textvariable=self.filename_var)
+        self.filename_field = tk.Entry(self.root, textvariable=self.filename_var)
         self.filename_field.bind('<Return>',self.generate_barcode)
         self.filename_field.pack()
-        self.code_label = tk.Label(root,text="Enter code (first 12 decimal digits):", font=self.label_font)
+        self.code_label = tk.Label(self.root,text="Enter code (first 12 decimal digits):", font=self.label_font)
         self.code_label.pack()
         self.code_var = tk.StringVar()
-        self.code_field = tk.Entry(root, textvariable=self.code_var)
+        self.code_field = tk.Entry(self.root, textvariable=self.code_var)
         self.code_field.bind('<Return>',self.generate_barcode)
         self.code_field.pack()
-        self.generate_button = tk.Button(root, text="Generate barcode!", command=self.generate_barcode)
+        self.generate_button = tk.Button(self.root, text="Generate barcode!", command=self.generate_barcode)
         self.generate_button.pack()
-        self.canvas = tk.Canvas(root, width=250, height=300, bg="white")
+        self.canvas = tk.Canvas(self.root, width=250, height=300, bg="white")
         self.canvas.pack()
 
     def generate_barcode(self, event=None):
