@@ -70,7 +70,7 @@ class barcode_canvas(tk.Canvas):
         # Dari code yang telah dipass sebagai parameter dari constructor barcode_canvas, encode terlebih dahulu
         self.code = code
         self.encoded = self.get_encoded()
-        # Buat barcode dari hasil encode
+        # Buat barcode serta tulisan-tulisan dari hasil encode
         self.draw_barcode()
         self.draw_text()
 
@@ -79,6 +79,9 @@ class barcode_canvas(tk.Canvas):
         Fungsi ini mengembalikan list yang berisi kedua bagian self.code yang sudah diencode TANPA guard sequence.
         """
         def encode(digit,code_type):
+            """
+            Fungsi ini mengembalikan encoded code yang sesuai untuk digit yang dimasukkan.
+            """
             if code_type == "L":
                 return self.L_CODE[digit]
             elif code_type == "G":
@@ -86,7 +89,10 @@ class barcode_canvas(tk.Canvas):
             else:
                 return self.R_CODE[digit]
 
+        # Ambil digit pertama (digunakan untuk menentukan struktur)
         first_digit = int(self.code[0])
+
+        # Ambil segmen pertama dan kedua serta strukturnya (berdasarkan digit pertama)
         first_seq = self.code[1:7]
         first_group = self.FIRST_STRUCTURE[first_digit]
         first_encoded = ""
@@ -94,16 +100,18 @@ class barcode_canvas(tk.Canvas):
         second_group = self.SECOND_STRUCTURE[first_digit]
         second_encoded = ""
         
-        # FIRST SEQUENCE
+        # Encode segmen pertama
         for index,code_type in enumerate(first_group):
+            # Ambil digit sekarang (dalam int), kemudian encode sesuai dengan struktur
             curr_digit = int(first_seq[index])
             first_encoded += encode(curr_digit,code_type)
 
-        # SECOND SEQUENCE
+        # Encode segmen kedua
         for index,code_type in enumerate(second_group):
             curr_digit = int(second_seq[index])
             second_encoded += encode(curr_digit,code_type)
 
+        # Kembalikan dalam tuple yang berisi segmen pertama dan kedua
         return (first_encoded,second_encoded)
 
     def draw_barcode(self):
@@ -111,36 +119,48 @@ class barcode_canvas(tk.Canvas):
         Fungsi ini menggambar barcode dengan data yang sudah diencode di self.encoded.
         """
         def draw_bar(bit,x,start_y,width,color,guard=False):
+            """
+            Fungsi ini menggambar 1 bar dari barcode tergantung pada bit masukan.
+            """
+            # Untuk "guard" bar pada ujung dan tengah, gunakan tinggi yang lebih tinggi daripada biasa
             if guard:
                 end_y = start_y + self.SEPARATOR_HEIGHT
             else:
                 end_y = start_y + self.NORMAL_HEIGHT
 
+            # Jika bit bernilai 0, gambar bar dengan warna putih (sama saja dengan tidak menggambar bar)
             if bit == "0":
                 fill = "white"
             else:
                 fill = color
 
+            # Buatlah bar (dalam bentuk line) dengan parameter yang sesuai
             self.create_line(x,start_y,x,end_y, fill=fill, width=width)
 
+        # Cari start position kemudian simpan komponen x dan y dalam variabel
         current_x, current_y = self.START_POSITION
         width = 2
+
         # Draw opening guard (101)
         for bit in "101":
             draw_bar(bit,current_x,current_y,width,"red",True)
             current_x += width
-        # Draw first seq
+
+        # Draw first sequence
         for bit in self.encoded[0]:
             draw_bar(bit,current_x,current_y,width,"blue")
             current_x += width
+
         # Draw middle guard (01010)
         for bit in "01010":
             draw_bar(bit,current_x,current_y,width,"red",True)
             current_x += width
-        # Draw second seq
+
+        # Draw second sequence
         for bit in self.encoded[1]:
             draw_bar(bit,current_x,current_y,width,"green")
             current_x += width
+
         # Draw end guard (101)
         for bit in "101":
             draw_bar(bit,current_x,current_y,width,"red",True)
@@ -155,14 +175,23 @@ class barcode_canvas(tk.Canvas):
         current_x = self.START_POSITION[0] + 90
         current_y = self.START_POSITION[1] - 20
         self.create_text(current_x,current_y,text="EAN-13 Barcode:",font=font)
-        # Set start position utk text (di bawah)
+
+        # Set start position utk text di bawah barcode
         current_x = self.START_POSITION[0] - 15
         current_y = self.START_POSITION[1] + self.NORMAL_HEIGHT + 15
+
+        # Tulis digit paling depan dari code
         self.create_text(current_x,current_y,text=self.code[0],font=font,anchor=tk.W)
         current_x += 33
+
+        # Tulis segmen pertama dari code (digit index 1-6)
         self.create_text(current_x,current_y,text=self.code[1:7],font=font,anchor=tk.W)
         current_x += 90
+
+        # Tulis segmen pertama dari code (digit index 7-akhir)
         self.create_text(current_x,current_y,text=self.code[7:],font=font,anchor=tk.W)
+
+        # Tulis check digit dari code
         current_x = self.START_POSITION[0] + 90
         current_y += 30
         self.create_text(current_x,current_y,text=f"Check Digit: {self.code[-1]}",font=font,fill="#f5c816")
