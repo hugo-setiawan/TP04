@@ -86,12 +86,12 @@ class barcode_canvas(tk.Canvas):
             else:
                 return self.R_CODE[digit]
 
-        first_seq = self.code[1:7]
         first_digit = int(self.code[0])
+        first_seq = self.code[1:7]
         first_group = self.FIRST_STRUCTURE[first_digit]
+        first_encoded = ""
         second_seq = self.code[7:]
         second_group = self.SECOND_STRUCTURE[first_digit]
-        first_encoded = ""
         second_encoded = ""
         
         # FIRST SEQUENCE
