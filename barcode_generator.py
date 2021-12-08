@@ -64,7 +64,7 @@ class barcode_canvas(tk.Canvas):
     SEPARATOR_HEIGHT = 140
     NORMAL_HEIGHT = 130
 
-    def __init__(self, root, code) -> None:
+    def __init__(self, root, code):
         # Init parent class (tk.Canvas) dengan ukuran dan warna yang sesuai
         super().__init__(root, width=250, height=300, bg="white")
         # Dari code yang telah dipass sebagai parameter dari constructor barcode_canvas, encode terlebih dahulu
