@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter.font import Font
 from tkinter.messagebox import showerror
-import string
 
 class barcode_gui:
     def __init__(self, root: tk.Tk):
