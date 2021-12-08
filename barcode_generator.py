@@ -163,7 +163,7 @@ class barcode_canvas(tk.Canvas):
         self.create_text(current_x,current_y,text=self.code[1:7],font=font,anchor=tk.W)
         current_x += 90
         self.create_text(current_x,current_y,text=self.code[7:],font=font,anchor=tk.W)
-        current_x = 130
+        current_x = self.START_POSITION[0] + 90
         current_y += 30
         self.create_text(current_x,current_y,text=f"Check Digit: {self.code[-1]}",font=font,fill="gold")
 
