@@ -157,7 +157,7 @@ class barcode_canvas(tk.Canvas):
         self.create_text(current_x,current_y,text="EAN-13 Barcode:",font=font)
         # Set start position utk text (di bawah)
         current_x = self.START_POSITION[0] - 15
-        current_y = self.START_POSITION[1] + self.SEPARATOR_HEIGHT + 10
+        current_y = self.START_POSITION[1] + self.NORMAL_HEIGHT + 15
         self.create_text(current_x,current_y,text=self.code[0],font=font,anchor=tk.W)
         current_x += 33
         self.create_text(current_x,current_y,text=self.code[1:7],font=font,anchor=tk.W)
