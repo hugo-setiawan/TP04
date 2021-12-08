@@ -10,6 +10,10 @@ class barcode_gui:
         self.create_widgets()
 
     def create_widgets(self):
+        """
+        Fungsi ini membuat seluruh widget yang terdapat di barcode_gui
+        """
+        # Buat label dan textbox serta variabelnya untuk filename.
         self.label_font = Font(family="Helvetica", weight="bold")
         self.save_label = tk.Label(self.root,text="Save barcode to PS file [eg: EAN13.eps]:", font=self.label_font)
         self.save_label.pack()
@@ -17,12 +21,16 @@ class barcode_gui:
         self.filename_field = tk.Entry(self.root, textvariable=self.filename_var)
         self.filename_field.bind('<Return>',self.generate_barcode)
         self.filename_field.pack()
+
+        # Buat label dan textbox serta variabelnya untuk code yang hendak dibuat barcodenya.
         self.code_label = tk.Label(self.root,text="Enter code (first 12 decimal digits):", font=self.label_font)
         self.code_label.pack()
         self.code_var = tk.StringVar()
         self.code_field = tk.Entry(self.root, textvariable=self.code_var)
         self.code_field.bind('<Return>',self.generate_barcode)
         self.code_field.pack()
+
+        # Buat tombol untuk mengenerate barcode (di samping ini, user juga dapat menekan enter pada textbox)
         self.generate_button = tk.Button(self.root, text="Generate barcode!", command=self.generate_barcode)
         self.generate_button.pack()
         self.canvas = tk.Canvas(self.root, width=250, height=300, bg="white")
