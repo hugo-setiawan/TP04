@@ -78,13 +78,13 @@ class barcode_canvas(tk.Canvas):
         """
         Fungsi ini mengembalikan list yang berisi kedua bagian self.code yang sudah diencode TANPA guard sequence.
         """
-        def encode(digit,code_type,l_code=self.L_CODE,g_code=self.G_CODE,r_code=self.R_CODE):
+        def encode(digit,code_type):
             if code_type == "L":
-                return l_code[digit]
+                return self.L_CODE[digit]
             elif code_type == "G":
-                return g_code[digit]
+                return self.G_CODE[digit]
             else:
-                return r_code[digit]
+                return self.R_CODE[digit]
 
         first_seq = self.code[1:7]
         first_digit = int(self.code[0])
