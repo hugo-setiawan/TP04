@@ -233,7 +233,7 @@ def checkdigit(code):
 
 def valid_filename(filename:str):
     """
-    Fungsi yang melakukan validasi filename, di mana filename harus berekstensi .ps atau .eps.
+    Fungsi yang melakukan validasi filename, di mana filename harus berekstensi .ps atau .eps dan filename tidak boleh mengandung illegal characters.
     """
     ILLEGAL_CHARACTERS = '<>:"/\\|?*'
     # Menyimpan filename dalam bentuk upper sementara (hanya untuk pengecekan)
