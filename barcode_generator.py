@@ -263,6 +263,9 @@ if __name__ == "__main__":
     main()
 
 # References
+# Slides DDP-1 B
+# https://docs.python.org/3/library/stdtypes.html
 # https://www.youtube.com/watch?v=5buJAAa_AX4 (for EAN-13 barcode generation)
 # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter
 # https://stackoverflow.com/questions/1976007/what-characters-are-forbidden-in-windows-and-linux-directory-names (for filename validation)
+# https://stackoverflow.com/questions/16996432/how-do-i-bind-the-enter-key-to-a-function-in-tkinter/16996475 (enter key binding)
