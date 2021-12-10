@@ -244,17 +244,8 @@ def valid_filename(filename:str) -> bool:
     if not (filename_upper.endswith(".EPS") or filename_upper.endswith(".PS")):
         return False
     
-    # Cari filename tanpa ekstensi dan pastikan ada namanya i.e. bukan cuman ekstensi ".ps"
-    # NOTE: str.removesuffix() baru ada di Python 3.9 ke atas. Harap menggunakan Python dengan versi 3.9 ke atas.
-    if filename_upper.endswith(".EPS"):
-        filename_no_extension = filename_upper.removesuffix(".EPS")
-    elif filename_upper.endswith(".PS"):
-        filename_no_extension = filename_upper.removesuffix(".PS")
-    if filename_no_extension == "":
-        return False
-    
     # Validasi: check illegal characters dalam filename
-    filename_filter = [character for character in filename_no_extension if character in ILLEGAL_CHARACTERS]
+    filename_filter = [character for character in filename_upper if character in ILLEGAL_CHARACTERS]
     if filename_filter != []:
         return False
         
