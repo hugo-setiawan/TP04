@@ -235,14 +235,22 @@ def valid_filename(filename:str):
     """
     Fungsi yang melakukan validasi filename, di mana filename harus berekstensi .ps atau .eps.
     """
+    ILLEGAL_CHARACTERS = '<>:"/\\|?*'
     # Menyimpan filename dalam bentuk upper sementara (hanya untuk pengecekan)
     filename_upper = filename.upper()
 
-    # Cek ekstensi (harus .eps atau .ps, dan ada namanya i.e. bukan cuman ".ps")
+    # Validasi: cek ekstensi (harus .eps atau .ps, dan ada namanya i.e. bukan cuman ekstensi ".ps")
     if not (filename_upper.endswith(".EPS") or filename_upper.endswith(".PS")):
         return False
-    elif (filename_upper.startswith(".EPS") or filename_upper.startswith(".PS")):
+    filename_no_extension = filename_upper.strip(".EPS")
+    if filename_no_extension == "":
         return False
+    
+    # Validasi: check illegal characters dalam filename
+    filename_filter = [character for character in filename_no_extension if character in ILLEGAL_CHARACTERS]
+    if filename_filter != []:
+        return False
+        
     # Ketika filename sudah benar return True
     return True
 
