@@ -39,7 +39,7 @@ class barcode_gui:
 
     def generate_barcode(self, event=None):
         """Fungsi ini membuat dan menyimpan sebuah barcode_canvas berdasarkan data yang diinput."""
-        self.code = self.code_var.get()
+        self.code = self.code_var.get().strip()
         # code_filter berisi seluruh karakter illegal yang terdapat di self.code
         code_filter = [character for character in self.code if character not in string.digits]
 
