@@ -245,6 +245,7 @@ def valid_filename(filename:str) -> bool:
         return False
     
     # Cari filename tanpa ekstensi dan pastikan ada namanya i.e. bukan cuman ekstensi ".ps"
+    # NOTE: str.removesuffix() baru ada di Python 3.9 ke atas. Harap menggunakan Python dengan versi 3.9 ke atas.
     if filename_upper.endswith(".EPS"):
         filename_no_extension = filename_upper.removesuffix(".EPS")
     elif filename_upper.endswith(".PS"):
