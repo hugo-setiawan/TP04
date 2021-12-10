@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter.font import Font
 from tkinter.messagebox import showerror
+import string
 
 class barcode_gui:
     def __init__(self, root: tk.Tk):
@@ -37,12 +38,15 @@ class barcode_gui:
         self.canvas.pack()
 
     def generate_barcode(self, event=None):
-        # Validate code
+        """Fungsi ini membuat dan menyimpan sebuah barcode_canvas berdasarkan data yang diinput."""
         self.code = self.code_var.get()
-        self.filter = filter(str.isdigit, self.code)
-        self.code_filtered = "".join(self.filter)
-        if len(self.code_filtered) != 12:
+        # code_filter berisi seluruh karakter illegal yang terdapat di self.code
+        code_filter = [character for character in self.code if character not in string.digits]
+
+        # Validasi: code tidak mengandung karakter illegal dan panjang kode persis 12 digit.
+        if code_filter != [] or len(self.code) != 12:
             showerror(self.title,"Please enter correct input code.")
+
         else:
             # Validate save path
             self.filename = self.filename_var.get()
@@ -50,7 +54,7 @@ class barcode_gui:
                 showerror(self.title,"Please enter correct filename.")
             else:
                 # Tambahkan check digit ke 12 digit code
-                self.code_checked = self.code_filtered + checkdigit(self.code_filtered)
+                self.code_checked = self.code + checkdigit(self.code)
                 # Hapus canvas sekarang dan buat object barcode_canvas baru
                 self.canvas.destroy()
                 self.canvas = barcode_canvas(self.root,self.code_checked)
