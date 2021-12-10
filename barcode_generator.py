@@ -246,9 +246,9 @@ def valid_filename(filename:str) -> bool:
     
     # Cari filename tanpa ekstensi dan pastikan ada namanya i.e. bukan cuman ekstensi ".ps"
     if filename_upper.endswith(".EPS"):
-        filename_no_extension = filename_upper.strip(".EPS")
+        filename_no_extension = filename_upper.removesuffix(".EPS")
     elif filename_upper.endswith(".PS"):
-        filename_no_extension = filename_upper.strip(".PS")
+        filename_no_extension = filename_upper.removesuffix(".PS")
     if filename_no_extension == "":
         return False
     
@@ -275,3 +275,4 @@ if __name__ == "__main__":
 # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter
 # https://stackoverflow.com/questions/1976007/what-characters-are-forbidden-in-windows-and-linux-directory-names (for filename validation)
 # https://stackoverflow.com/questions/16996432/how-do-i-bind-the-enter-key-to-a-function-in-tkinter/16996475 (enter key binding)
+# https://stackoverflow.com/questions/3663450/remove-substring-only-at-the-end-of-string
