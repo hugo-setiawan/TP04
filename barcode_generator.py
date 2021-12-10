@@ -239,10 +239,15 @@ def valid_filename(filename:str):
     # Menyimpan filename dalam bentuk upper sementara (hanya untuk pengecekan)
     filename_upper = filename.upper()
 
-    # Validasi: cek ekstensi (harus .eps atau .ps, dan ada namanya i.e. bukan cuman ekstensi ".ps")
+    # Validasi: cek ekstensi (harus .eps atau .ps)
     if not (filename_upper.endswith(".EPS") or filename_upper.endswith(".PS")):
         return False
-    filename_no_extension = filename_upper.strip(".EPS")
+    
+    # Cari filename tanpa ekstensi dan pastikan ada namanya i.e. bukan cuman ekstensi ".ps"
+    if filename_upper.endswith(".EPS"):
+        filename_no_extension = filename_upper.strip(".EPS")
+    elif filename_upper.endswith(".PS"):
+        filename_no_extension = filename_upper.strip(".PS")
     if filename_no_extension == "":
         return False
     
