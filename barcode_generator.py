@@ -60,6 +60,7 @@ class barcode_gui:
                 self.canvas = barcode_canvas(self.root,self.code_checked)
                 self.canvas.pack()
                 self.canvas.update()
+                # Simpan canvas ke dalam postscript file dengan filename yang sudah ditentukan
                 self.canvas.postscript(file=self.filename)
 
     def mainloop(self):
