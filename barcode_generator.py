@@ -208,7 +208,7 @@ class barcode_canvas(tk.Canvas):
         current_y += 30
         self.create_text(current_x,current_y,text=f"Check Digit: {self.code[-1]}",font=font,fill="#f5c816")
 
-def checkdigit(code):
+def checkdigit(code:str) -> str:
     """
     Fungsi yang menghitung checkdigit dari 12 digit EAN-13 code dan mengembalikan checkdigitnya dalam bentuk string.
     """
@@ -231,7 +231,7 @@ def checkdigit(code):
     else:
         return str(weighted_sum_modulo)
 
-def valid_filename(filename:str):
+def valid_filename(filename:str) -> bool:
     """
     Fungsi yang melakukan validasi filename, di mana filename harus berekstensi .ps atau .eps dan filename tidak boleh mengandung illegal characters.
     """
